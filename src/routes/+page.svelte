@@ -1,18 +1,18 @@
 <script>
   const GRID_SIZE = 30;
-  function initRows() {
+  function initRows(isRandom) {
     let grid = [];
     for (let i = 0; i < GRID_SIZE; i += 1) {
       let q = [];
       for (let j = 0; j < GRID_SIZE; j += 1) {
-        q.push({ value: Math.floor(Math.random() * 2) });
+        q.push({ value: Number(isRandom) * Math.floor(Math.random() * 2) });
       }
       grid.push(q);
     }
     return grid;
   }
 
-  let rows = initRows();
+  let rows = initRows(1);
 
   let source = { r: 0, c: 0 };
   let target = { r: GRID_SIZE - 1, c: GRID_SIZE - 1 };
@@ -169,8 +169,8 @@
   }
   let resetGrid = false;
 
-  function handleReset() {
-    rows = initRows();
+  function handleReset(isRandom) {
+    rows = initRows(isRandom);
     source = { r: 0, c: 0 };
     target = { r: GRID_SIZE - 1, c: GRID_SIZE - 1 };
     resetGrid = false;
@@ -207,7 +207,8 @@
         disabled={selectingSource || playing}>Select Target</button
       >
     {:else}
-      <button style="width: 200px;" on:click={handleReset}>Reset</button>
+      <button style="width: 200px;" on:click={() => handleReset(false)}>Reset Blank</button>
+      <button style="width: 200px;" on:click={() => handleReset(true)}>Reset Random</button>
     {/if}
   </div>
 
